@@ -13,7 +13,8 @@
 @synthesize title = _title;
 @synthesize url = _url;
 
-- (id)initWithTitle:(NSString *)title url:(NSString *)url {
+- (id)initWithTitle:(NSString *)title url:(NSString *)url
+{
     if ((self = [super init])) {
         self.title = title;
         self.url = url;

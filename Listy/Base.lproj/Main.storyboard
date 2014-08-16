@@ -62,7 +62,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Listy" id="tQt-TN-PWz">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="K6w-mn-ZcO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="K6w-mn-ZcO">
                             <connections>
                                 <segue destination="Ah7-4n-0Wa" kind="push" identifier="addNewItem" id="fAL-b2-XEi"/>
                             </connections>
@@ -114,7 +114,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Dish" id="cra-N8-TIN">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="UxR-ab-X1g">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="UxR-ab-X1g">
                             <connections>
                                 <action selector="userDidSave:" destination="Ah7-4n-0Wa" id="0vx-DA-l0B"/>
                             </connections>

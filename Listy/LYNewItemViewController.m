@@ -16,7 +16,15 @@
 
 @implementation LYNewItemViewController
 
-- (IBAction)userDidSave:(id)sender {
+- (void)viewDidLoad
+{
+    NSString *paste = [UIPasteboard generalPasteboard].string;
+    if (paste && [self isValidURL:paste])
+        self.urlText.text = paste;
+}
+
+- (IBAction)userDidSave:(id)sender
+{
     if (![self validateData])
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not save item"
@@ -35,12 +43,17 @@
 {
     if (self.urlText.text.length > 0)
     {
-        NSURL *candidateURL = [NSURL URLWithString:self.urlText.text];
-        if (!candidateURL || !candidateURL.scheme || !candidateURL.host)
+        if (![self isValidURL:self.urlText.text])
             return NO;
     }
 
     return (self.titleText.text.length > 0);
+}
+
+- (bool)isValidURL:(NSString *)url
+{
+    NSURL *candidateURL = [NSURL URLWithString:url];
+    return (candidateURL && candidateURL.scheme && candidateURL.host);
 }
 
 - (void)setParent:(LYMasterViewController *)parent
