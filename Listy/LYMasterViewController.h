@@ -12,4 +12,6 @@
 
 @property (strong) NSMutableArray *items;
 
+- (void)createNewItemWithTitle:(NSString*)title url:(NSString*)url;
+
 @end

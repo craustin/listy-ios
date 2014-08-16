@@ -16,7 +16,7 @@
 		39CC0347199F9FF200CB49D3 /* LYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CC0346199F9FF200CB49D3 /* LYAppDelegate.m */; };
 		39CC034A199F9FF200CB49D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39CC0348199F9FF200CB49D3 /* Main.storyboard */; };
 		39CC034D199F9FF200CB49D3 /* LYMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CC034C199F9FF200CB49D3 /* LYMasterViewController.m */; };
-		39CC0350199F9FF200CB49D3 /* LYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CC034F199F9FF200CB49D3 /* LYDetailViewController.m */; };
+		39CC0350199F9FF200CB49D3 /* LYNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CC034F199F9FF200CB49D3 /* LYNewItemViewController.m */; };
 		39CC0352199F9FF200CB49D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CC0351199F9FF200CB49D3 /* Images.xcassets */; };
 		39CC0359199F9FF300CB49D3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CC0358199F9FF300CB49D3 /* XCTest.framework */; };
 		39CC035A199F9FF300CB49D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CC0336199F9FF200CB49D3 /* Foundation.framework */; };
@@ -51,8 +51,8 @@
 		39CC0349199F9FF200CB49D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		39CC034B199F9FF200CB49D3 /* LYMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYMasterViewController.h; sourceTree = "<group>"; };
 		39CC034C199F9FF200CB49D3 /* LYMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYMasterViewController.m; sourceTree = "<group>"; };
-		39CC034E199F9FF200CB49D3 /* LYDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYDetailViewController.h; sourceTree = "<group>"; };
-		39CC034F199F9FF200CB49D3 /* LYDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYDetailViewController.m; sourceTree = "<group>"; };
+		39CC034E199F9FF200CB49D3 /* LYNewItemViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYNewItemViewController.h; sourceTree = "<group>"; };
+		39CC034F199F9FF200CB49D3 /* LYNewItemViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYNewItemViewController.m; sourceTree = "<group>"; };
 		39CC0351199F9FF200CB49D3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		39CC0357199F9FF300CB49D3 /* ListyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ListyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CC0358199F9FF300CB49D3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -93,8 +93,8 @@
 				39CC0348199F9FF200CB49D3 /* Main.storyboard */,
 				39CC034B199F9FF200CB49D3 /* LYMasterViewController.h */,
 				39CC034C199F9FF200CB49D3 /* LYMasterViewController.m */,
-				39CC034E199F9FF200CB49D3 /* LYDetailViewController.h */,
-				39CC034F199F9FF200CB49D3 /* LYDetailViewController.m */,
+				39CC034E199F9FF200CB49D3 /* LYNewItemViewController.h */,
+				39CC034F199F9FF200CB49D3 /* LYNewItemViewController.m */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -278,7 +278,7 @@
 			files = (
 				39CC0343199F9FF200CB49D3 /* main.m in Sources */,
 				39CC0347199F9FF200CB49D3 /* LYAppDelegate.m in Sources */,
-				39CC0350199F9FF200CB49D3 /* LYDetailViewController.m in Sources */,
+				39CC0350199F9FF200CB49D3 /* LYNewItemViewController.m in Sources */,
 				39CC034D199F9FF200CB49D3 /* LYMasterViewController.m in Sources */,
 				393447EC199FB1F7007E3AC2 /* LYItemData.m in Sources */,
 			);
