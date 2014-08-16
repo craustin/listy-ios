@@ -20,7 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *cookedImage;
 @property (weak, nonatomic) IBOutlet UIView *cookedControlsView;
 
-- (void)setParent:(LYMasterViewController*)parent;
+- (void)setParent:(LYMasterViewController *)parent;
+- (void)setItem:(LYItemData *)item;
 - (IBAction)cookedSwitchChanged:(id)sender;
 
 @end

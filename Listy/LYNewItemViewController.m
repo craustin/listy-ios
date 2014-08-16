@@ -11,6 +11,7 @@
 
 @interface LYNewItemViewController () {
     LYMasterViewController *_parent;
+    LYItemData *_item;
 }
 @end
 
@@ -21,6 +22,21 @@
     NSString *paste = [UIPasteboard generalPasteboard].string;
     if (paste && [self isValidURL:paste])
         self.urlText.text = paste;
+    
+    if (_item)
+    {
+        self.titleText.text = _item.title;
+        self.urlText.text = _item.url;
+        if (_item.cookedDate)
+        {
+            self.cookedDatePicker.date = _item.cookedDate;
+            self.cookedSwitch.on = YES;
+            self.cookedControlsView.hidden = NO;
+        }
+        if (_item.cookedImage)
+            self.cookedImage.image = _item.cookedImage;
+    }
+    [super viewDidLoad];
 }
 
 - (IBAction)userDidSave:(id)sender
@@ -35,7 +51,22 @@
         [alert show];
         return;
     }
-    [_parent createNewItemWithTitle:self.titleText.text url:self.urlText.text];
+    
+    if (!_item)
+    {
+        [_parent createNewItemWithTitle:self.titleText.text
+                                    url:self.urlText.text
+                             cookedDate:self.cookedDatePicker.date
+                            cookedImage:self.cookedImage.image];
+    }
+    else
+    {
+        _item.title = self.titleText.text;
+        _item.url = self.urlText.text;
+        _item.cookedDate = self.cookedDatePicker.date;
+        _item.cookedImage = self.cookedImage.image;
+        [_parent setEditing:NO animated:YES];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -59,11 +90,17 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
+    [self touchesBegan:touches withEvent:event];
 }
 
 - (void)setParent:(LYMasterViewController *)parent
 {
     _parent = parent;
+}
+
+-(void)setItem:(LYItemData *)item
+{
+    _item = item;
 }
 
 - (IBAction)cookedSwitchChanged:(id)sender {

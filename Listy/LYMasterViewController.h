@@ -12,6 +12,6 @@
 
 @property (strong) NSMutableArray *items;
 
-- (void)createNewItemWithTitle:(NSString*)title url:(NSString*)url;
+- (void)createNewItemWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage;
 
 @end

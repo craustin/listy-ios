@@ -13,11 +13,13 @@
 @synthesize title = _title;
 @synthesize url = _url;
 
-- (id)initWithTitle:(NSString *)title url:(NSString *)url
+- (id)initWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage
 {
     if ((self = [super init])) {
         self.title = title;
         self.url = url;
+        self.cookedDate = cookedDate;
+        self.cookedImage = cookedImage;
     }
     return self;
 }

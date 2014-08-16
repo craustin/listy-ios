@@ -19,15 +19,21 @@
 
 @synthesize items = _items;
 
-- (void)createNewItemWithTitle:(NSString *)title url:(NSString *)url
+- (void)createNewItemWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage
 {
-    LYItemData *item = [[LYItemData alloc] initWithTitle:title url:url];
+    LYItemData *item = [[LYItemData alloc] initWithTitle:title url:url cookedDate:cookedDate cookedImage:cookedImage];
     [_items insertObject:item atIndex:0];
 }
 
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad
@@ -68,8 +74,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LYItemData *item = _items[indexPath.row];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: item.url]];
+    if (self.tableView.isEditing)
+    {
+        [self performSegueWithIdentifier:@"displayExistingItem" sender:self];
+    }
+    else
+    {
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        LYItemData *item = _items[indexPath.row];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: item.url]];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -85,22 +99,16 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.tableView reloadData];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"addNewItem"]) {
+    if ([[segue identifier] isEqualToString:@"displayNewItem"]) {
         [segue.destinationViewController setParent:self];
-//        LYItemData *item = [[LYItemData alloc] init];
-        
-//        [_items insertObject:item atIndex:0];
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-//        [[segue destinationViewController] setTheItem:item];
+    } else if ([[segue identifier] isEqualToString:@"displayExistingItem"]) {
+        NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+        LYItemData *item = [self.items objectAtIndex:path.row];
+
+        [segue.destinationViewController setParent:self];
+        [segue.destinationViewController setItem:item];
     }
 }
 

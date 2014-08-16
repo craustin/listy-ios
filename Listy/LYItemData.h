@@ -12,7 +12,9 @@
 
 @property (strong) NSString *title;
 @property (strong) NSString *url;
+@property (strong) NSDate *cookedDate;
+@property (strong) UIImage *cookedImage;
 
-- (id)initWithTitle:(NSString*)title url:(NSString*)url;
+- (id)initWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage;
 
 @end

@@ -16,9 +16,9 @@
 {
     // Override point for customization after application launch.
     
-    LYItemData *item1 = [[LYItemData alloc] initWithTitle:@"Tasty Steak" url:@"http://meaty.com"];
-    LYItemData *item2 = [[LYItemData alloc] initWithTitle:@"Moroccan Chicken" url:@"http://spicy.ma"];
-    LYItemData *item3 = [[LYItemData alloc] initWithTitle:@"Chinese Dish" url:@"http://foods.cn"];
+    LYItemData *item1 = [[LYItemData alloc] initWithTitle:@"Tasty Steak" url:@"http://meaty.com" cookedDate:nil cookedImage:nil];
+    LYItemData *item2 = [[LYItemData alloc] initWithTitle:@"Moroccan Chicken" url:@"http://spicy.ma" cookedDate:nil cookedImage:nil];
+    LYItemData *item3 = [[LYItemData alloc] initWithTitle:@"Chinese Dish" url:@"http://foods.cn" cookedDate:nil cookedImage:nil];
     NSMutableArray *items = [NSMutableArray arrayWithObjects:item1, item2, item3, nil];
     
     UINavigationController *navController = (UINavigationController *) self.window.rootViewController;
