@@ -7,12 +7,24 @@
 //
 
 #import "LYAppDelegate.h"
+#import "LYMasterViewController.h"
+#import "LYItemData.h"
 
 @implementation LYAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    LYItemData *item1 = [[LYItemData alloc] initWithTitle:@"Tasty Steak" url:@"http://meaty.com"];
+    LYItemData *item2 = [[LYItemData alloc] initWithTitle:@"Moroccan Chicken" url:@"http://spicy.ma"];
+    LYItemData *item3 = [[LYItemData alloc] initWithTitle:@"Chinese Dish" url:@"http://foods.cn"];
+    NSMutableArray *items = [NSMutableArray arrayWithObjects:item1, item2, item3, nil];
+    
+    UINavigationController *navController = (UINavigationController *) self.window.rootViewController;
+    LYMasterViewController *masterController = [navController.viewControllers objectAtIndex:0];
+    masterController.items = items;
+    
     return YES;
 }
 							

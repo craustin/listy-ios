@@ -10,4 +10,6 @@
 
 @interface LYMasterViewController : UITableViewController
 
+@property (strong) NSMutableArray *items;
+
 @end

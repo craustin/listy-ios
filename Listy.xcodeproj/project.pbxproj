@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		393447EC199FB1F7007E3AC2 /* LYItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 393447EB199FB1F7007E3AC2 /* LYItemData.m */; };
 		39CC0337199F9FF200CB49D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CC0336199F9FF200CB49D3 /* Foundation.framework */; };
 		39CC0339199F9FF200CB49D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CC0338199F9FF200CB49D3 /* CoreGraphics.framework */; };
 		39CC033B199F9FF200CB49D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CC033A199F9FF200CB49D3 /* UIKit.framework */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		393447EA199FB1F7007E3AC2 /* LYItemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYItemData.h; sourceTree = "<group>"; };
+		393447EB199FB1F7007E3AC2 /* LYItemData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYItemData.m; sourceTree = "<group>"; };
 		39CC0333199F9FF200CB49D3 /* Listy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Listy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CC0336199F9FF200CB49D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		39CC0338199F9FF200CB49D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -82,6 +85,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		393447E8199FB18A007E3AC2 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				39CC0345199F9FF200CB49D3 /* LYAppDelegate.h */,
+				39CC0346199F9FF200CB49D3 /* LYAppDelegate.m */,
+				39CC0348199F9FF200CB49D3 /* Main.storyboard */,
+				39CC034B199F9FF200CB49D3 /* LYMasterViewController.h */,
+				39CC034C199F9FF200CB49D3 /* LYMasterViewController.m */,
+				39CC034E199F9FF200CB49D3 /* LYDetailViewController.h */,
+				39CC034F199F9FF200CB49D3 /* LYDetailViewController.m */,
+			);
+			name = GUI;
+			sourceTree = "<group>";
+		};
+		393447E9199FB196007E3AC2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				393447EA199FB1F7007E3AC2 /* LYItemData.h */,
+				393447EB199FB1F7007E3AC2 /* LYItemData.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		39CC032A199F9FF200CB49D3 = {
 			isa = PBXGroup;
 			children = (
@@ -115,13 +141,8 @@
 		39CC033C199F9FF200CB49D3 /* Listy */ = {
 			isa = PBXGroup;
 			children = (
-				39CC0345199F9FF200CB49D3 /* LYAppDelegate.h */,
-				39CC0346199F9FF200CB49D3 /* LYAppDelegate.m */,
-				39CC0348199F9FF200CB49D3 /* Main.storyboard */,
-				39CC034B199F9FF200CB49D3 /* LYMasterViewController.h */,
-				39CC034C199F9FF200CB49D3 /* LYMasterViewController.m */,
-				39CC034E199F9FF200CB49D3 /* LYDetailViewController.h */,
-				39CC034F199F9FF200CB49D3 /* LYDetailViewController.m */,
+				393447E9199FB196007E3AC2 /* Model */,
+				393447E8199FB18A007E3AC2 /* GUI */,
 				39CC0351199F9FF200CB49D3 /* Images.xcassets */,
 				39CC033D199F9FF200CB49D3 /* Supporting Files */,
 			);
@@ -259,6 +280,7 @@
 				39CC0347199F9FF200CB49D3 /* LYAppDelegate.m in Sources */,
 				39CC0350199F9FF200CB49D3 /* LYDetailViewController.m in Sources */,
 				39CC034D199F9FF200CB49D3 /* LYMasterViewController.m in Sources */,
+				393447EC199FB1F7007E3AC2 /* LYItemData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +485,7 @@
 				39CC036A199F9FF300CB49D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		39CC036B199F9FF300CB49D3 /* Build configuration list for PBXNativeTarget "ListyTests" */ = {
 			isa = XCConfigurationList;
@@ -471,6 +494,7 @@
 				39CC036D199F9FF300CB49D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
