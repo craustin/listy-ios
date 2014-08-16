@@ -56,9 +56,45 @@
     return (candidateURL && candidateURL.scheme && candidateURL.host);
 }
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 - (void)setParent:(LYMasterViewController *)parent
 {
     _parent = parent;
+}
+
+- (IBAction)cookedSwitchChanged:(id)sender {
+    [UIView transitionWithView:self.cookedControlsView
+                      duration:0.4
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:NULL
+                    completion:NULL];
+    
+    self.cookedControlsView.hidden = !self.cookedSwitch.on;
+}
+
+- (IBAction)didClickChoosePhoto:(id)sender {
+    [self getPhoto:UIImagePickerControllerSourceTypePhotoLibrary];
+}
+
+- (IBAction)didClickTakePhoto:(id)sender {
+    [self getPhoto:UIImagePickerControllerSourceTypeCamera];
+}
+
+- (void)getPhoto:(UIImagePickerControllerSourceType)sourceType
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.sourceType = sourceType;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+	[picker dismissViewControllerAnimated:YES completion:nil];
+	self.cookedImage.image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
 }
 
 @end

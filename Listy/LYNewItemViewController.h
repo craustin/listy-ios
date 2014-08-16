@@ -11,11 +11,16 @@
 #import "LYItemData.h"
 #import "LYMasterViewController.h"
 
-@interface LYNewItemViewController : UIViewController
+@interface LYNewItemViewController : UIViewController<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *titleText;
 @property (weak, nonatomic) IBOutlet UITextField *urlText;
+@property (weak, nonatomic) IBOutlet UISwitch *cookedSwitch;
+@property (weak, nonatomic) IBOutlet UIDatePicker *cookedDatePicker;
+@property (weak, nonatomic) IBOutlet UIImageView *cookedImage;
+@property (weak, nonatomic) IBOutlet UIView *cookedControlsView;
 
 - (void)setParent:(LYMasterViewController*)parent;
+- (IBAction)cookedSwitchChanged:(id)sender;
 
 @end
