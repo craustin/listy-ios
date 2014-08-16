@@ -54,17 +54,29 @@
     
     if (!_item)
     {
+        NSDate *cookedDate = nil;
+        if (self.cookedSwitch.on)
+            cookedDate = self.cookedDatePicker.date;
+            
         [_parent createNewItemWithTitle:self.titleText.text
                                     url:self.urlText.text
-                             cookedDate:self.cookedDatePicker.date
+                             cookedDate:cookedDate
                             cookedImage:self.cookedImage.image];
     }
     else
     {
         _item.title = self.titleText.text;
         _item.url = self.urlText.text;
-        _item.cookedDate = self.cookedDatePicker.date;
-        _item.cookedImage = self.cookedImage.image;
+        if (self.cookedSwitch.on)
+        {
+            _item.cookedDate = self.cookedDatePicker.date;
+            _item.cookedImage = self.cookedImage.image;
+        }
+        else
+        {
+            _item.cookedDate = nil;
+            _item.cookedImage = nil;
+        }
         [_parent setEditing:NO animated:YES];
     }
     [self.navigationController popViewControllerAnimated:YES];
@@ -90,7 +102,6 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-    [self touchesBegan:touches withEvent:event];
 }
 
 - (void)setParent:(LYMasterViewController *)parent
