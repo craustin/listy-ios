@@ -53,7 +53,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CookedCell" textLabel="4BN-QG-NZH" detailTextLabel="lEJ-uI-ivv" style="IBUITableViewCellStyleValue1" id="6UZ-6a-H5K">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CookedCell" editingAccessoryType="disclosureIndicator" textLabel="4BN-QG-NZH" detailTextLabel="lEJ-uI-ivv" style="IBUITableViewCellStyleValue1" id="6UZ-6a-H5K">
                                 <rect key="frame" x="0.0" y="130" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6UZ-6a-H5K" id="kBn-hB-0hE">

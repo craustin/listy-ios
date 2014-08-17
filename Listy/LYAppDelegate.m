@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Triply. All rights reserved.
 //
 
+#import <Firebase/Firebase.h>
+
 #import "LYAppDelegate.h"
 #import "LYMasterViewController.h"
 #import "LYItemData.h"
@@ -15,20 +17,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    NSString *dateString = @"12-Jul-14";
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"dd-MMM-yy";
-    NSDate *date = [dateFormatter dateFromString:dateString];
     
-    LYItemData *item1 = [[LYItemData alloc] initWithTitle:@"Tasty Steak" url:@"http://meaty.com" cookedDate:nil cookedImage:nil];
-    LYItemData *item2 = [[LYItemData alloc] initWithTitle:@"Moroccan Chicken" url:@"http://spicy.ma" cookedDate:nil cookedImage:nil];
-    LYItemData *item3 = [[LYItemData alloc] initWithTitle:@"Chinese Dish" url:@"http://foods.cn" cookedDate:nil cookedImage:nil];
-    LYItemData *item4 = [[LYItemData alloc] initWithTitle:@"Pizza" url:@"http://xiaoyi.co.uk" cookedDate:date cookedImage:nil];
-    NSMutableArray *items = [NSMutableArray arrayWithObjects:item1, item2, item3, item4, nil];
+    // Create a reference to a Firebase location
+    Firebase* myRootRef = [[Firebase alloc] initWithUrl:@"https://listy-meals.firebaseio.com/"];
+    // Write data to Firebase
+    [myRootRef setValue:@"Do you have data? You'll love Firebase."];
     
     UINavigationController *navController = (UINavigationController *) self.window.rootViewController;
     LYMasterViewController *masterController = [navController.viewControllers objectAtIndex:0];
-    masterController.items = items;
+    masterController.items = [LYItemList getSample];
     
     return YES;
 }

@@ -8,6 +8,7 @@
 
 #import "LYNewItemViewController.h"
 #import "LYMasterViewController.h"
+#import "MBProgressHUD.h"
 
 @interface LYNewItemViewController () {
     LYMasterViewController *_parent;
@@ -79,7 +80,20 @@
         }
         [_parent setEditing:NO animated:YES];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self.view endEditing:YES];  // so nothing happens when user clicks during spinner
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [NSThread sleepForTimeInterval:0.3];  // fake delay
+        
+        // TODO: persist changes to server
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    });
 }
 
 - (bool)validateData

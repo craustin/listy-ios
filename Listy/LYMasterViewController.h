@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LYItemList.h"
 
 @interface LYMasterViewController : UITableViewController
 
-@property (strong) NSMutableArray *items;
+@property (strong) LYItemList *items;
 
 - (void)createNewItemWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage;
 

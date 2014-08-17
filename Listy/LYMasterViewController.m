@@ -12,10 +12,6 @@
 
 @interface LYMasterViewController () {
 }
-
-@property (readonly) NSArray *itemsUncooked;
-@property (readonly) NSArray *itemsCooked;
-
 @end
 
 @implementation LYMasterViewController
@@ -25,7 +21,7 @@
 - (void)createNewItemWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage
 {
     LYItemData *item = [[LYItemData alloc] initWithTitle:title url:url cookedDate:cookedDate cookedImage:cookedImage];
-    [_items insertObject:item atIndex:0];
+    [_items insert:item];
 }
 
 - (void)awakeFromNib
@@ -70,9 +66,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
-        return self.itemsUncooked.count;
+        return self.items.uncooked.count;
     else
-        return self.itemsCooked.count;
+        return self.items.cooked.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,12 +85,12 @@
     // TODO: Fix N^2 lookup
     if (indexPath.section == 0)
     {
-        item = self.itemsUncooked[indexPath.row];
+        item = self.items.uncooked[indexPath.row];
         cell.detailTextLabel.text = item.url;
     }
     else
     {
-        item = self.itemsCooked[indexPath.row];
+        item = self.items.cooked[indexPath.row];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateStyle:NSDateFormatterShortStyle];
         cell.detailTextLabel.text = [dateFormat stringFromDate:item.cookedDate];
@@ -113,7 +109,7 @@
     else
     {
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        NSArray *itemsArray = (indexPath.section == 0 ? self.itemsUncooked : self.itemsCooked);
+        NSArray *itemsArray = (indexPath.section == 0 ? self.items.uncooked : self.items.cooked);
         LYItemData *item = itemsArray[indexPath.row];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString: item.url]];
     }
@@ -127,7 +123,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_items removeObjectAtIndex:indexPath.row];
+        [_items removeAt:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -138,33 +134,12 @@
         [segue.destinationViewController setParent:self];
     } else if ([[segue identifier] isEqualToString:@"displayExistingItem"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSArray *itemsArray = (indexPath.section == 0 ? self.itemsUncooked : self.itemsCooked);
+        NSArray *itemsArray = (indexPath.section == 0 ? self.items.uncooked : self.items.cooked);
         LYItemData *item = itemsArray[indexPath.row];
 
         [segue.destinationViewController setParent:self];
         [segue.destinationViewController setItem:item];
     }
-}
-
-- (NSArray *)itemsUncooked
-{
-    return [self getCookedItems:NO];
-}
-
-- (NSArray *)itemsCooked
-{
-    return [self getCookedItems:YES];
-}
-
-- (NSArray *)getCookedItems:(bool)cooked
-{
-    NSMutableArray *arr = [NSMutableArray array];
-    for (LYItemData *item in _items)
-    {
-        if ((cooked && item.cookedDate) || (!cooked && !item.cookedDate))
-            [arr addObject:item];
-    }
-    return arr;
 }
 
 @end
