@@ -9,6 +9,7 @@
 #import "LYMasterViewController.h"
 #import "LYNewItemViewController.h"
 #import "LYItemData.h"
+#import "MBProgressHUD.h"
 
 @interface LYMasterViewController () {
 }
@@ -26,6 +27,7 @@
 
 -(void)dataUpdated
 {
+    [MBProgressHUD hideHUDForView:self.tableView animated:YES];
     [self.tableView reloadData];
 }
 
@@ -43,6 +45,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
