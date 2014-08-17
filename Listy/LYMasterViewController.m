@@ -18,10 +18,26 @@
 
 @synthesize items = _items;
 
+-(void)setItems:(LYItemList *)items
+{
+    _items = items;
+    items.delegate = self;
+}
+
+-(void)dataUpdated
+{
+    [self.tableView reloadData];
+}
+
 - (void)createNewItemWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage
 {
     LYItemData *item = [[LYItemData alloc] initWithTitle:title url:url cookedDate:cookedDate cookedImage:cookedImage];
-    [_items insert:item];
+    [_items insertItem:item];
+}
+
+- (void)childUpdatedItem:(LYItemData *)item
+{
+    [_items updateItem:item];
 }
 
 - (void)awakeFromNib
@@ -97,6 +113,7 @@
     }
     
     cell.textLabel.text = item.title;
+    cell.textLabel.accessibilityLabel = item.key;
     return cell;
 }
 
@@ -123,7 +140,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_items removeAt:indexPath.row];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [_items removeKey:cell.textLabel.accessibilityLabel];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }

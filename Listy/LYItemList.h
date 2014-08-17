@@ -10,18 +10,22 @@
 
 #import "LYItemData.h"
 
+@protocol LYDataUpdatedDelegate <NSObject>
+@required
+- (void)dataUpdated;
+@end
+
 @interface LYItemList : NSObject
 
-- (void)insert:(LYItemData *)item;
-- (void)removeAt:(NSInteger)pos;
-
-// TODO: lookup by hash (dictionary)
-// TODO: store hash on TableViewCell
-// TODO: determine order (created date?)
+- (void)insertItem:(LYItemData *)item;
+- (void)updateItem:(LYItemData *)item;
+- (void)removeKey:(NSString *)key;
 
 @property (readonly) NSArray *uncooked;
 @property (readonly) NSArray *cooked;
+@property (weak) id<LYDataUpdatedDelegate> delegate;
 
 + (LYItemList *)getSample;
++ (LYItemList *)loadFromFireBase;
 
 @end

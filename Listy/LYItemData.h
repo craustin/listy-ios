@@ -10,11 +10,14 @@
 
 @interface LYItemData : NSObject
 
+@property (strong) NSString *key;
 @property (strong) NSString *title;
 @property (strong) NSString *url;
 @property (strong) NSDate *cookedDate;
 @property (strong) UIImage *cookedImage;
 
 - (id)initWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage;
+- (id)initWithDict:(NSDictionary *)dict key:(NSString *)key;\
+- (NSDictionary *)asDict;
 
 @end

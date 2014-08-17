@@ -18,14 +18,9 @@
 {
     // Override point for customization after application launch.
     
-    // Create a reference to a Firebase location
-    Firebase* myRootRef = [[Firebase alloc] initWithUrl:@"https://listy-meals.firebaseio.com/"];
-    // Write data to Firebase
-    [myRootRef setValue:@"Do you have data? You'll love Firebase."];
-    
     UINavigationController *navController = (UINavigationController *) self.window.rootViewController;
     LYMasterViewController *masterController = [navController.viewControllers objectAtIndex:0];
-    masterController.items = [LYItemList getSample];
+    masterController.items = [LYItemList loadFromFireBase];
     
     return YES;
 }

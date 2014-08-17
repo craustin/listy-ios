@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "LYItemList.h"
 
-@interface LYMasterViewController : UITableViewController
+@interface LYMasterViewController : UITableViewController<LYDataUpdatedDelegate>
 
-@property (strong) LYItemList *items;
+@property (nonatomic, strong) LYItemList *items;
 
 - (void)createNewItemWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage;
+- (void)childUpdatedItem:(LYItemData *)item;
 
 @end

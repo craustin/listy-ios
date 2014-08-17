@@ -53,46 +53,43 @@
         return;
     }
     
-    if (!_item)
-    {
-        NSDate *cookedDate = nil;
-        if (self.cookedSwitch.on)
-            cookedDate = self.cookedDatePicker.date;
-            
-        [_parent createNewItemWithTitle:self.titleText.text
-                                    url:self.urlText.text
-                             cookedDate:cookedDate
-                            cookedImage:self.cookedImage.image];
-    }
-    else
-    {
-        _item.title = self.titleText.text;
-        _item.url = self.urlText.text;
-        if (self.cookedSwitch.on)
+    [self.view endEditing:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Give the spinner some time to display before we run a possibly long-running main thread operation.
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (!_item)
         {
-            _item.cookedDate = self.cookedDatePicker.date;
-            _item.cookedImage = self.cookedImage.image;
+            NSDate *cookedDate = nil;
+            if (self.cookedSwitch.on)
+                cookedDate = self.cookedDatePicker.date;
+            
+            [_parent createNewItemWithTitle:self.titleText.text
+                                        url:self.urlText.text
+                                 cookedDate:cookedDate
+                                cookedImage:self.cookedImage.image];
         }
         else
         {
-            _item.cookedDate = nil;
-            _item.cookedImage = nil;
+            _item.title = self.titleText.text;
+            _item.url = self.urlText.text;
+            if (self.cookedSwitch.on)
+            {
+                _item.cookedDate = self.cookedDatePicker.date;
+                _item.cookedImage = self.cookedImage.image;
+            }
+            else
+            {
+                _item.cookedDate = nil;
+                _item.cookedImage = nil;
+            }
+            [_parent childUpdatedItem:_item];
+            [_parent setEditing:NO animated:YES];
         }
-        [_parent setEditing:NO animated:YES];
-    }
-    
-    [self.view endEditing:YES];  // so nothing happens when user clicks during spinner
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [NSThread sleepForTimeInterval:0.3];  // fake delay
-        
-        // TODO: persist changes to server
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [self.navigationController popViewControllerAnimated:YES];
-        });
+
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     });
 }
 
