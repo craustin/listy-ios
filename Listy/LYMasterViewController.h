@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LYItemList.h"
 
-@interface LYMasterViewController : UITableViewController<LYDataUpdatedDelegate>
+@interface LYMasterViewController : UITableViewController<LYDataUpdatedDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) LYItemList *items;
 

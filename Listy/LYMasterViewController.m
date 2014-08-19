@@ -12,6 +12,8 @@
 #import "MBProgressHUD.h"
 
 @interface LYMasterViewController () {
+    NSArray *_uncookedSearchResults;
+    NSArray *_cookedSearchResults;
 }
 @end
 
@@ -50,21 +52,33 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.tableView reloadData];
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    // Hide the search bar on startup.
+    [self.tableView setContentOffset:CGPointMake(0, 44) animated:YES];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    if ([[segue identifier] isEqualToString:@"displayNewItem"]) {
+        [segue.destinationViewController setParent:self];
+    } else if ([[segue identifier] isEqualToString:@"displayExistingItem"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSArray *itemsArray = (indexPath.section == 0 ? self.items.uncooked : self.items.cooked);
+        LYItemData *item = itemsArray[indexPath.row];
+        
+        [segue.destinationViewController setParent:self];
+        [segue.destinationViewController setItem:item];
+    }
 }
 
 #pragma mark - Table View
@@ -84,10 +98,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
-        return self.items.uncooked.count;
-    else
-        return self.items.cooked.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if (section == 0)
+            return [_uncookedSearchResults count];
+        else
+            return [_cookedSearchResults count];
+    } else {
+        if (section == 0)
+            return self.items.uncooked.count;
+        else
+            return self.items.cooked.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,19 +118,25 @@
         cellTemplate = @"BasicCell";
     else
         cellTemplate = @"CookedCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellTemplate
-                                                            forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellTemplate
+                                                                 forIndexPath:indexPath];
 
     LYItemData *item;
     // TODO: Fix N^2 lookup
     if (indexPath.section == 0)
     {
-        item = self.items.uncooked[indexPath.row];
+        if (tableView == self.searchDisplayController.searchResultsTableView)
+            item = _uncookedSearchResults[indexPath.row];
+        else
+            item = self.items.uncooked[indexPath.row];
         cell.detailTextLabel.text = item.url;
     }
     else
     {
-        item = self.items.cooked[indexPath.row];
+        if (tableView == self.searchDisplayController.searchResultsTableView)
+            item = _cookedSearchResults[indexPath.row];
+        else
+            item = self.items.cooked[indexPath.row];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateStyle:NSDateFormatterShortStyle];
         cell.detailTextLabel.text = [dateFormat stringFromDate:item.cookedDate];
@@ -149,18 +176,17 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    if ([[segue identifier] isEqualToString:@"displayNewItem"]) {
-        [segue.destinationViewController setParent:self];
-    } else if ([[segue identifier] isEqualToString:@"displayExistingItem"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSArray *itemsArray = (indexPath.section == 0 ? self.items.uncooked : self.items.cooked);
-        LYItemData *item = itemsArray[indexPath.row];
+    [self filterContentForSearchText:searchString];
+    return YES;
+}
 
-        [segue.destinationViewController setParent:self];
-        [segue.destinationViewController setItem:item];
-    }
+- (void)filterContentForSearchText:(NSString*)searchText
+{
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
+    _uncookedSearchResults = [self.items.uncooked filteredArrayUsingPredicate:resultPredicate];
+    _cookedSearchResults = [self.items.cooked filteredArrayUsingPredicate:resultPredicate];
 }
 
 @end

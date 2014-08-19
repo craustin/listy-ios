@@ -268,6 +268,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Triply;
 				TargetAttributes = {
+					39CC0332199F9FF200CB49D3 = {
+						DevelopmentTeam = 397VJ287C7;
+					};
 					39CC0356199F9FF300CB49D3 = {
 						TestTargetID = 39CC0332199F9FF200CB49D3;
 					};
@@ -451,6 +454,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -459,7 +463,7 @@
 				GCC_PREFIX_HEADER = "Listy/Listy-Prefix.pch";
 				INFOPLIST_FILE = "Listy/Listy-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "970a6914-eb8d-4051-b82b-860a5483b700";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -469,6 +473,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -477,7 +482,7 @@
 				GCC_PREFIX_HEADER = "Listy/Listy-Prefix.pch";
 				INFOPLIST_FILE = "Listy/Listy-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2fd1f693-3980-4ae3-a9f8-d80c838d6d23";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
