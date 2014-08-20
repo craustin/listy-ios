@@ -30,7 +30,12 @@
 -(void)dataUpdated
 {
     [MBProgressHUD hideHUDForView:self.tableView animated:YES];
-    [self.tableView reloadData];
+
+    // update proper TableView (to avoid bug with section headers showing through)
+    if (self.searchDisplayController.isActive)
+        [self.searchDisplayController.searchResultsTableView reloadData];
+    else
+        [self.tableView reloadData];
 }
 
 - (void)createNewItemWithTitle:(NSString *)title url:(NSString *)url cookedDate:(NSDate *)cookedDate cookedImage:(UIImage *)cookedImage
@@ -50,12 +55,6 @@
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.tableView reloadData];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -72,12 +71,28 @@
     if ([[segue identifier] isEqualToString:@"displayNewItem"]) {
         [segue.destinationViewController setParent:self];
     } else if ([[segue identifier] isEqualToString:@"displayExistingItem"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSArray *itemsArray = (indexPath.section == 0 ? self.items.uncooked : self.items.cooked);
+        UITableView *tableView = (UITableView *)sender;
+        NSIndexPath *indexPath = [tableView indexPathForSelectedRow];
+        NSArray *itemsArray = [self getItemsArrayForTableView:tableView section:indexPath.section];
         LYItemData *item = itemsArray[indexPath.row];
         
         [segue.destinationViewController setParent:self];
         [segue.destinationViewController setItem:item];
+    }
+}
+
+- (NSArray *)getItemsArrayForTableView:(UITableView *)tableView section:(int)section
+{
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if (section == 0)
+            return _uncookedSearchResults;
+        else
+            return _cookedSearchResults;
+    } else {
+        if (section == 0)
+            return self.items.uncooked;
+        else
+            return self.items.cooked;
     }
 }
 
@@ -98,17 +113,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if (section == 0)
-            return [_uncookedSearchResults count];
-        else
-            return [_cookedSearchResults count];
-    } else {
-        if (section == 0)
-            return self.items.uncooked.count;
-        else
-            return self.items.cooked.count;
-    }
+    return [self getItemsArrayForTableView:tableView section:section].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -121,22 +126,13 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellTemplate
                                                                  forIndexPath:indexPath];
 
-    LYItemData *item;
-    // TODO: Fix N^2 lookup
+    LYItemData *item = [self getItemsArrayForTableView:tableView section:indexPath.section][indexPath.row];
     if (indexPath.section == 0)
     {
-        if (tableView == self.searchDisplayController.searchResultsTableView)
-            item = _uncookedSearchResults[indexPath.row];
-        else
-            item = self.items.uncooked[indexPath.row];
         cell.detailTextLabel.text = item.url;
     }
     else
     {
-        if (tableView == self.searchDisplayController.searchResultsTableView)
-            item = _cookedSearchResults[indexPath.row];
-        else
-            item = self.items.cooked[indexPath.row];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateStyle:NSDateFormatterShortStyle];
         cell.detailTextLabel.text = [dateFormat stringFromDate:item.cookedDate];
@@ -151,12 +147,13 @@
 {
     if (self.tableView.isEditing || indexPath.section == 1)
     {
-        [self performSegueWithIdentifier:@"displayExistingItem" sender:self];
+        [self performSegueWithIdentifier:@"displayExistingItem" sender:tableView];
     }
     else
     {
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        NSArray *itemsArray = (indexPath.section == 0 ? self.items.uncooked : self.items.cooked);
+
+        NSArray *itemsArray = [self getItemsArrayForTableView:tableView section:indexPath.section];
         LYItemData *item = itemsArray[indexPath.row];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString: item.url]];
     }
@@ -172,8 +169,16 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         [_items removeKey:cell.textLabel.accessibilityLabel];
+        
+        // update tableView so that we get proper animation
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
+{
+    // we don't load normal tableView during search - so update it afterward
+    [self.tableView reloadData];
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString

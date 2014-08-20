@@ -90,6 +90,7 @@
     item.key = newItemRef.name;
     
     [self insertItemToDict:item];
+    [_delegate dataUpdated];
 }
 
 - (void)updateItem:(LYItemData *)item
@@ -99,6 +100,7 @@
     [itemRef setValue:[item asDict]];
     
     [self insertItemToDict:item];
+    [_delegate dataUpdated];
 }
 
 - (void)removeKey:(NSString *)key
@@ -122,6 +124,7 @@
 
 - (NSArray *)getCookedItems:(bool)cooked
 {
+    // TODO: Fix N^2 lookup
     NSMutableArray *arr = [NSMutableArray array];
     for (LYItemData *item in _items.allValues)
     {
